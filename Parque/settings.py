@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-
+# Authentication users custom
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Parque.urls'
+AUTH_USER_MODEL = "api_parque.User"
 
 TEMPLATES = [
     {
