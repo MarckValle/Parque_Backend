@@ -20,7 +20,7 @@ class TypeRegister(models.Model):
 class Status(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     status = models.CharField(max_length=30)
-
+    
     class Meta:
         db_table = 'status'
 

@@ -4,7 +4,7 @@ from rest_framework import status
 
 from api_parque.models import TypeUser
 
-class AddUserTypeAPiView(APIView):
+class UserTypeAPiView(APIView):
     
     def post(self, request):
         type = request.data.get('type', '')
