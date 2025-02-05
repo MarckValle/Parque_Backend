@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 
-
 from api_parque.models import Habitat
+from api_parque.Admin.Habitat.serializers import HabitatSerializer
 
 class HabitatAPiView(APIView):
     
@@ -24,12 +24,23 @@ class HabitatAPiView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
     def get(self, request):
+        
         request.user
+
         try:
-            habitat = Habitat.objects.all()
-            habitats = {
-                'habitat': habitat.id
-            }
-            return Response(habitats, status=status.HTTP_201_CREATED)
+
+            habitats = Habitat.objects.all()
+            serializer = HabitatSerializer(habitats, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except habitats.DoesNotExist:
+            return Response({'error': 'There is no registers in table'}, status=status.HTTP_404_NOT_FOUND)
+        
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    
+        
+        
+
