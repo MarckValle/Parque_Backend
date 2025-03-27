@@ -139,6 +139,14 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde un archivo .env
+load_dotenv()
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -147,13 +155,9 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True  # Activa el uso de TLS
 EMAIL_USE_SSL = False  # No usar SSL
-EMAIL_HOST_USER = "marco.vallejo2000@gmail.com"
-EMAIL_HOST_PASSWORD = "yszzfrnqvjldgmxt"  # API KEy generate in GMail api
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-
-import os
 
 TEMPLATES = [
     {
@@ -175,9 +179,9 @@ TEMPLATES = [
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_STORAGE_BUCKET_NAME = 'netza-park'
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = 'us-east-2'
-AWS_ACCESS_KEY_ID = 'AKIAQG5VE2NJZKQ5PK6G'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
