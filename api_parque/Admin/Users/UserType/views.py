@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from api_parque.models import TypeUser
+from api_parque.Admin.Users.UserType.serializers import TypeUserSerializer
 
 class UserTypeAPiView(APIView):
     
@@ -17,3 +18,16 @@ class UserTypeAPiView(APIView):
             
             except Exception as e:
                 return Response({'message': 'Error'}, status=status.HTTP_404_NOT_FOUND)
+            
+    def get(self, request):
+
+        try:
+
+            type_u = TypeUser.objects.all()
+            serializer = TypeUserSerializer(type_u, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        

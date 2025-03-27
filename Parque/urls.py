@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('general/', include('api_parque.Authentication.router')),
     path('admin_netzahualcoyotl/', include('api_parque.Admin.router')),
+    path('general_netzahualcoyotl/', include('api_parque.General.router')),
 ]

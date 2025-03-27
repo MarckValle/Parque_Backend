@@ -17,7 +17,6 @@ class GetRegistersAPiView(APIView):
     def post(self, request):
         page_size = request.data.get('page_size', 10)
         request.user
-
         
         try:
 
@@ -42,8 +41,10 @@ class GetRegistersAPiView(APIView):
 
             return paginated_response
         
-        except registers.DoesNotExist:
+        except Register.DoesNotExist:
             return Response({'error': 'Tehre is no registers in the table'}, status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+    
