@@ -8,12 +8,12 @@ from api_parque.Admin.Habitat.serializers import HabitatSerializer
 from django.conf import settings
 import boto3
 from uuid import uuid4
-
+import os
 s3_client = boto3.client(
     "s3",
     # Ya no necesitas endpoint_url para AWS S3 estándar
-    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
     region_name=settings.AWS_S3_REGION_NAME,
 )
 
@@ -25,7 +25,7 @@ def upload_to_s3(file, folder):
             # Subir archivo al bucket
             s3_client.upload_fileobj(
                 Fileobj=file,
-                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                Bucket= os.getenv('AWS_STORAGE_BUCKET_NAME'),
                 Key=file_key,
                 ExtraArgs={
                     'ContentType': file.content_type,
