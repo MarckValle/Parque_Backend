@@ -11,7 +11,7 @@ urlpatterns = [
     path('send_comments/' , SendCommentView.as_view() , name='send_comments'),
     path('get_photos/' , GetPhotosAPIView.as_view() , name='get_photos'),
     path('guess_photo/' , GuessPhotoAPIView.as_view() , name='guess_photo'),
-     path('api/stats/', views.VisitStatsView.as_view()),
-     path('register_card/', RegisterCardAPIView.as_view(), name='get-register-card'),
-     path('search_register/', SearchRegistersAPIView.as_view(), name='search-register'),
+    path('api/stats/', views.VisitStatsView.as_view()),
+    path('register_card/<int:register_id>/', RegisterCardAPIView.as_view(), name='get-register-card'),
+    path('search_register/', SearchRegistersAPIView.as_view(), name='search-register'),
 ]

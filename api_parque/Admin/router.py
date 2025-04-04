@@ -9,13 +9,16 @@ from api_parque.Admin.Registers.GetRegisters.views import GetRegistersAPiView
 from api_parque.Admin.Habitat.TableHabitats.views import TableHabitatAPiView
 from api_parque.Admin.Registers.Status.TableStatus.views import TableStatusAPiView
 from api_parque.Admin.Users.TableUsers.views import TableUserAPiView
-
 from api_parque.Admin.Sighthings.GetSighthing.views import GetSighthingsView
 from api_parque.Admin.Sighthings.ValidateSight.views import ValidateSighthingsAPiView
 from api_parque.Admin.Alimentation.views import CreateAlimentationtView
 from api_parque.Admin.Threat.views import CreateThreatView
 from api_parque.Admin.Threat.ThreatTable.views import TableThreatsAPiView
 from api_parque.Admin.Alimentation.TableFeed.views import TableFeedAPiView
+from api_parque.Admin.Dashboard.RegistersCount.views import RegistersCountAPIView
+from api_parque.Admin.Dashboard.Sighthings.views import SighthingsCountAPIView
+from api_parque.Admin.Dashboard.TopAnimals.views import MostPopularRegistersAPIView
+from api_parque.Admin.Dashboard.Visits.All.views import AllVisitsAPIView
 
 urlpatterns = [
     path('user_type/', UserTypeAPiView.as_view(), name='add-type'),
@@ -28,12 +31,15 @@ urlpatterns = [
     path('table_habitats/', TableHabitatAPiView.as_view(), name='get-table-habitats'),
     path('table_status/', TableStatusAPiView.as_view(), name='get-table-status'),
     path('table_users/', TableUserAPiView.as_view(), name='get-table-users'),
-    
     path('get_all_sighthings/', GetSighthingsView.as_view(), name='get-sighthing-card'),
     path('validate_sighthings/', ValidateSighthingsAPiView.as_view(), name='validate-sighthing-card'),
     path('create_feed/', CreateAlimentationtView.as_view(), name='create-feed'),
     path('create_threat/', CreateThreatView.as_view(), name='create-threat'),
     path('table_threat/', TableThreatsAPiView.as_view(), name='table-threat'),
     path('table_feed/', TableFeedAPiView.as_view(), name='table-feed'),
-   
+    path('registers_count/', RegistersCountAPIView.as_view(), name='registers-count'),
+    path('sighthings_count/', SighthingsCountAPIView.as_view(), name='sighthings-count'),
+    path('most_visited_register/', MostPopularRegistersAPIView.as_view(), name='most-visited-registers'),
+    path('all_visits/', AllVisitsAPIView.as_view(), name='all-visits'),
+    
 ]
