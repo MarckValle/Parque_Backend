@@ -20,7 +20,7 @@ CORS_ALLOWED_ORIGINS = [
      "http://localhost:5173",
     "http://localhost:8000",
     "http://localhost:6379",
-    'https://parque-netzahualcoyotl.onrender.com'
+    "https://netzapark-backend.onrender.com"
 ]
 
 # Authentication users custom
@@ -140,22 +140,22 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-# Cargar variables de entorno desde un archivo .env
-load_dotenv()
+# # Cargar variables de entorno desde un archivo .env
+# load_dotenv()
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True  # Activa el uso de TLS
-EMAIL_USE_SSL = False  # No usar SSL
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'marco.vallejo2000@gmail.com'
+EMAIL_HOST_PASSWORD = 'zepf yxvn ilst kfcv'  # <- no tu contraseña normal
 
 
 
