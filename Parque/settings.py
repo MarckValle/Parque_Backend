@@ -20,7 +20,8 @@ CORS_ALLOWED_ORIGINS = [
      "http://localhost:5173",
     "http://localhost:8000",
     "http://localhost:6379",
-    "https://netzapark-backend.onrender.com"
+    "https://netzapark-backend.onrender.com",
+    "https://parque-netzahualcoyotl.onrender.com"
 ]
 
 # Authentication users custom
