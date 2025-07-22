@@ -124,9 +124,12 @@ class RegisterSerializer(serializers.ModelSerializer):
                 return None
         return None
 
+
+
     # Obtener URL para photo
     def get_photo(self, obj):
         return self.get_presigned_url(obj.photo, "photos")
+
 
     # Obtener URL para sound
     def get_sound(self, obj):
