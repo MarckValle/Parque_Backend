@@ -46,7 +46,7 @@ class GetPhotosAPIView(APIView):
                     file_name = str(register.photo).strip()
 
                     # normalizamos extensión
-                    if file_name.lower().endswith((".jpg", ".jpeg", ".png", "jfif")):
+                    if file_name.lower().endswith((".jpg", ".jpeg", ".png", ".jfif")):
                         # si ya incluye carpeta (ej: "photos/imagen.jpg"), no la duplicamos
                         if file_name.startswith("photos/"):
                             url = get_presigned_url(file_name.replace("photos/", ""), "photos")
