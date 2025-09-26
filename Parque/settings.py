@@ -194,5 +194,3 @@ AWS_DEFAULT_ACL = 'public-read'
 # EMAIL_HOST_USER = 'marco.vallejo2000@gmail.com'
 # EMAIL_HOST_PASSWORD = 'zepfyxvnilstkfcv'
 
-
-GOOGLE_APPLICATION_CREDENTIALS=r"C:/Users/MarcoVallejo/Downloads/e-caldron-419505-f1d28e04ecc1.json"
