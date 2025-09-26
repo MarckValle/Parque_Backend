@@ -40,14 +40,23 @@ def get_presigned_url(file_name, folder):
 class GetPhotosAPIView(APIView):
     def get(self, request):
         try:
-            photos = [
-                get_presigned_url(register.photo, "photos")
-                for register in Register.objects.all()
-                if register.photo and register.photo.lower().endswith((".jpg", ".jpeg", ".png"))
-            ]
+            photos = []
+            for register in Register.objects.all():
+                if register.photo:  # si tiene algo en la DB
+                    file_name = str(register.photo).strip()
+
+                    # normalizamos extensión
+                    if file_name.lower().endswith((".jpg", ".jpeg", ".png", "jfif")):
+                        # si ya incluye carpeta (ej: "photos/imagen.jpg"), no la duplicamos
+                        if file_name.startswith("photos/"):
+                            url = get_presigned_url(file_name.replace("photos/", ""), "photos")
+                        else:
+                            url = get_presigned_url(file_name, "photos")
+
+                        if url:
+                            photos.append(url)
 
             return Response({"photos": photos}, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
