@@ -11,11 +11,25 @@ import boto3
 
 from google.cloud import vision
 from google.oauth2 import service_account
+import json
+import os
 
-CREDENTIALS_PATH = r"C:/Users/MarcoVallejo/Downloads/e-caldron-419505-f1d28e04ecc1.json"
-credentials = service_account.Credentials.from_service_account_file(CREDENTIALS_PATH)
+def get_vision_client():
+    """Crea el cliente de Vision solo cuando se necesita"""
+    # Intenta obtener las credenciales desde variable de entorno
+    credentials_json = os.environ.get('GOOGLE_CREDENTIALS')
+    
+    if credentials_json:
+        # En producción (Render)
+        credentials_info = json.loads(credentials_json)
+        credentials = service_account.Credentials.from_service_account_info(credentials_info)
+    else:
+        # En desarrollo local
+        CREDENTIALS_PATH = r"C:/Users/MarcoVallejo/Downloads/e-caldron-419505-f1d28e04ecc1.json"
+        credentials = service_account.Credentials.from_service_account_file(CREDENTIALS_PATH)
+    
+    return vision.ImageAnnotatorClient(credentials=credentials)
 
-client = vision.ImageAnnotatorClient(credentials=credentials)
 
 # Configuración de S3
 s3_client = boto3.client(
@@ -48,8 +62,10 @@ def upload_to_s3(file, folder):
 
 def analyze_image_safe_search(file_bytes):
     """Valida imagen con Google Cloud Vision SafeSearch"""
+    # Crear el cliente AQUÍ, no al inicio del módulo
+    client = get_vision_client()
+    
     image = vision.Image(content=file_bytes)
-
     response = client.safe_search_detection(image=image)
     safe = response.safe_search_annotation
 
