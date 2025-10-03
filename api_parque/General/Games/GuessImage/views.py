@@ -43,7 +43,7 @@ class GuessPhotoAPIView(APIView):
                     "photo": get_presigned_url(register.photo, "photos") if register.photo else None
                 }
                 for register in Register.objects.all()
-                if register.photo and register.photo.lower().endswith((".jpg", ".jpeg", ".png"))
+                if register.photo and register.photo.lower().endswith((".jpg", ".jpeg", ".png", ".jfif"))
             ]
 
             return Response({"photos": photos_data}, status=status.HTTP_200_OK)
