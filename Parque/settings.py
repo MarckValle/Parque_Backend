@@ -93,10 +93,10 @@ WSGI_APPLICATION = 'Parque.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbpark',
-        'USER': 'dbpark_user',
-        'PASSWORD': 'inF242r2z8pftstciI1jgVkj8UroaXGD',
-        'HOST': 'dpg-d391a91r0fns738b5k50-a.oregon-postgres.render.com',
+        'NAME': 'dbpark_sqkb',
+        'USER': 'dbpark_sqkb_user',
+        'PASSWORD': '866fE8WPzCPd173zhCGLeO1s1GtEJYq1',
+        'HOST': 'dpg-d40p9ni4d50c739f3omg-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
