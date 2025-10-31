@@ -66,38 +66,36 @@ class CreateAlimentationtView(APIView):
 
         
     def put(self, request):
-        request.user
+        alimentation_id = request.data.get("id")
         name = request.data.get("name", "")
-        photo = request.FILES.get("photo")  # Obtener archivo desde request.FILES
+        photo = request.FILES.get("photo")  # Puede ser None
 
-        if not name or not photo:
-            return Response({"error": "Name and photo are required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not alimentation_id:
+            return Response({"error": "El ID del registro es requerido"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Conectar a MinIO usando boto3
-            s3_client = boto3.client(
-                "s3",
-                endpoint_url=settings.AWS_S3_ENDPOINT_URL,
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME,
-            )
+            # Buscar registro existente
+            alimentation = Alimentation.objects.filter(id=alimentation_id).first()
+            if not alimentation:
+                return Response({"error": "El registro no existe"}, status=status.HTTP_404_NOT_FOUND)
 
-            # Subir el archivo a MinIO
-            file_key = f"alimentations/{photo.name}"  # Ruta dentro del bucket
-            s3_client.upload_fileobj(photo, settings.AWS_STORAGE_BUCKET_NAME, file_key)
+            # Si se subió una nueva imagen, subir a S3
+            if photo:
+                uploaded_photo = upload_to_s3(photo, "photos")
+                alimentation.photo = uploaded_photo['key']  # Guardar solo el nombre del archivo
 
-            # Generar URL pública (sin expiración)
-            file_url = f"{settings.AWS_S3_ENDPOINT_URL}/{settings.AWS_STORAGE_BUCKET_NAME}/{file_key}"
-
-            # Guardar en la base de datos
-            alimentation = Alimentation(name=name, photo=file_url)
+            # Actualizar nombre
+            alimentation.name = name
             alimentation.save()
 
-            return Response({"message": "alimentation created successfully", "photo_url": file_url}, status=status.HTTP_201_CREATED)
+            return Response({
+                "message": "Registro actualizado correctamente",
+                "file_name": alimentation.photo
+            }, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     
     
     def delete(self, request):

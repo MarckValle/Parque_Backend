@@ -186,6 +186,7 @@ AWS_ACCESS_KEY_ID = 'AKIAQG5VE2NJZKQ5PK6G'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_ENDPOINT_URL = 'https://netza-park.s3.amazonaws.com/photos/'
 
 # # AWS_ACCESS_KEY_ID = 'AKIAQG5VE2NJZKQ5PK6G'
 # AWS_ACCESS_KEY_ID = 'AKIAQG5VE2NJZKQ5PK6G'
@@ -194,3 +195,4 @@ AWS_DEFAULT_ACL = 'public-read'
 # EMAIL_HOST_USER = 'marco.vallejo2000@gmail.com'
 # EMAIL_HOST_PASSWORD = 'zepfyxvnilstkfcv'
 
+FRONTEND_URL = "http://localhost:5173"
