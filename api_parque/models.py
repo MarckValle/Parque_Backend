@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+import requests
+
+
 
 # Create your models here.
 class TypeUser(models.Model):
@@ -152,10 +155,36 @@ class PageVisit(models.Model):
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.TextField(null=True, blank=True)
     user = models.ForeignKey('api_parque.User', null=True, blank=True, on_delete=models.SET_NULL)
-    
+
+    # 🆕 Nuevos campos de geolocalización
+    city = models.CharField(max_length=100, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+
     class Meta:
         db_table = 'page_visit'
         indexes = [
             models.Index(fields=['path']),
             models.Index(fields=['timestamp']),
         ]
+
+    def save(self, *args, **kwargs):
+        """
+        Solo hace la petición de geolocalización si el registro no tiene coordenadas.
+        Evita llamadas repetidas a ip-api.com.
+        """
+        if self.ip_address and (self.lat is None or self.lon is None):
+            # Evitar IPs locales (no geolocalizables)
+            if not self.ip_address.startswith(('127.', '192.', '10.', '::1')):
+                try:
+                    res = requests.get(f"https://ip-api.com/json/{self.ip_address}", timeout=5).json()
+                    if res.get('status') == 'success':
+                        self.lat = res.get('lat')
+                        self.lon = res.get('lon')
+                        self.city = res.get('city', '')
+                        self.country = res.get('country', '')
+                except Exception as e:
+                    print(f"Error al geolocalizar {self.ip_address}: {e}")
+
+        super().save(*args, **kwargs)
