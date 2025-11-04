@@ -20,7 +20,7 @@ from api_parque.Admin.Dashboard.Sighthings.views import SighthingsCountAPIView
 from api_parque.Admin.Dashboard.TopAnimals.views import MostPopularRegistersAPIView
 from api_parque.Admin.Dashboard.Visits.All.views import AllVisitsAPIView
 from api_parque.Admin.Dashboard.Visits.MonthlyChart.views import VisitStatsView
-from api_parque.Admin.Dashboard.Visits.LocationMap.views import GetVisitorsLocations
+from api_parque.Admin.Dashboard.Visits.LocationMap.views import VisitorsSummaryAPIView
 
 urlpatterns = [
     path('user_type/', UserTypeAPiView.as_view(), name='add-type'),
@@ -44,6 +44,6 @@ urlpatterns = [
     path('most_visited_register/', MostPopularRegistersAPIView.as_view(), name='most-visited-registers'),
     path('all_visits/', AllVisitsAPIView.as_view(), name='all-visits'),
     path('visits_chart/', VisitStatsView.as_view(), name='all-chart-visits'),
-    path('location_map/', GetVisitorsLocations.as_view(), name='location-map'),
+    path('location_map/', VisitorsSummaryAPIView.as_view(), name='location-map'),
     
 ]
